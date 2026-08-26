@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Assignment — Social Graph Demo{% endblock %}
+{% block content %}
+  <h1>Assignment</h1>
+  <p>
+    Implement each function in <code>answers.py</code> (a Neo4j transaction function, like the
+    seed functions in <code>main.py</code>), save the file, then reload this page — each one is
+    re-run read-only against the live database and graded.
+  </p>
+
+  <div class="progress-bar">
+    <div class="progress-bar-fill" style="width: {{ (100 * done_count / total) if total else 0 }}%"></div>
+  </div>
+  <p>{{ done_count }} / {{ total }} tasks complete
+    <a class="recheck-link" href="{{ url_for('assignment') }}">Re-check answers.py</a>
+  </p>
+
+  {% for result in results %}
+    <section class="task {{ 'done' if result.done else '' }} {{ 'unattempted' if not result.attempted else '' }}">
+      <h2>
+        <span class="status-icon">{{ '✅' if result.done else ('⬜️' if not result.attempted else '❌') }}</span>
+        {{ result.task.title }}
+      </h2>
+      <p>{{ result.task.prompt }}</p>
+      <pre class="query">{{ result.source }}</pre>
+      <p class="task-message {{ 'error' if (result.attempted and not result.done) else '' }}">{{ result.message }}</p>
+    </section>
+  {% endfor %}
+{% endblock %}

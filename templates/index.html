@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Admin — Social Graph Demo{% endblock %}
+{% block content %}
+  <h1>Admin Dashboard</h1>
+  <p>A live look at the social network's data, straight from Neo4j.</p>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <span class="stat-value">{{ users|length }}</span>
+      <span class="stat-label">Users</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">{{ groups|length }}</span>
+      <span class="stat-label">Groups</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">{{ friendships|length }}</span>
+      <span class="stat-label">Friendships</span>
+    </div>
+  </div>
+
+  <h2>Users</h2>
+  <div class="table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr><th>Name</th><th>Friends</th><th>Groups</th></tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.name }}</td>
+          <td>{{ user.friends|join(", ") if user.friends else "—" }}</td>
+          <td>{{ user.groups|join(", ") if user.groups else "—" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Groups</h2>
+  <div class="table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr><th>Group</th><th>Members</th></tr>
+      </thead>
+      <tbody>
+        {% for group in groups %}
+        <tr>
+          <td>{{ group.name }}</td>
+          <td>{{ group.members|join(", ") if group.members else "—" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Friend Activity</h2>
+  <div class="table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr><th>Person</th><th>Friend</th><th>Followed since</th></tr>
+      </thead>
+      <tbody>
+        {% for f in friendships %}
+        <tr>
+          <td>{{ f.person }}</td>
+          <td>{{ f.friend }}</td>
+          <td>{{ f.since }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
