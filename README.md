@@ -28,14 +28,7 @@ whatever else is already running:
 ## 1. Start Neo4j
 
 ```bash
-docker run -d \
-  --name neo4j-demo \
-  -p 7475:7474 \
-  -p 7476:7473 \
-  -p 7688:7687 \
-  -e NEO4J_AUTH=neo4j/demopassword \
-  -v neo4j_demo_data:/data \
-  neo4j:5
+docker run -d --name neo4j-demo -p 7475:7474 -p 7476:7473 -p 7688:7687 -e NEO4J_AUTH=neo4j/demopassword -v neo4j_demo_data:/data neo4j:5
 ```
 
 This starts Neo4j with:
